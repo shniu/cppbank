@@ -5,11 +5,16 @@
 #include <iostream>
 #include <random>
 #include <boost/algorithm/string.hpp>
-#include "bank.hpp"
-#include "random.hpp"
+#include "algo/bubble.cpp"
+#include "gtest/gtest.h"
+
+TEST(metachain, case1) {
+    EXPECT_EQ(10, 10);
+}
+
 
 int main(int argc, char **argv) {
-    std::cout << "模拟银行队列" << std::endl;
+    /*std::cout << "模拟银行队列" << std::endl;
     Bank b = Bank(1);
     b.Simulation();
 
@@ -29,5 +34,22 @@ int main(int argc, char **argv) {
     std::default_random_engine generator2(time(nullptr));
     std::uniform_int_distribution<int> dis2(0, 100);
     // auto dice = std::bind(dis2, generator2);
+
+    hello();*/
+
+    /// unit test
+    testing::InitGoogleTest(&argc, argv);
+    RUN_ALL_TESTS();
+
+    /// bubble sort
+    /*int n, i, a[100];
+    std::cin >> n;
+    for (i = 0; i < n; i++) {
+        std::cin >> a[i];
+    }
+    bubble_sort(a, n);
+    for (i = 0; i < n; i++) {
+        std::cout << a[i] << std::endl;
+    }*/
 }
 
