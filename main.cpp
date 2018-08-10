@@ -7,6 +7,7 @@
 #include <boost/algorithm/string.hpp>
 #include "algo/bubble.cpp"
 #include "gtest/gtest.h"
+#include "threadpool/thread_pool.hpp"
 
 TEST(metachain, case1) {
     EXPECT_EQ(10, 10);
@@ -34,12 +35,15 @@ int main(int argc, char **argv) {
     std::default_random_engine generator2(time(nullptr));
     std::uniform_int_distribution<int> dis2(0, 100);
     // auto dice = std::bind(dis2, generator2);
+    */
+    // hello();
 
-    hello();*/
+    MetaThreadPool metaThreadPool(10);
+    metaThreadPool.SwitchActiveThread();
 
     /// unit test
-    testing::InitGoogleTest(&argc, argv);
-    RUN_ALL_TESTS();
+//    testing::InitGoogleTest(&argc, argv);
+//    RUN_ALL_TESTS();
 
     /// bubble sort
     /*int n, i, a[100];

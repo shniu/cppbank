@@ -1,7 +1,6 @@
 //
 // Created by niushaohan on 2018/8/9.
 //
-#pragma once
 
 #include <iostream>
 
