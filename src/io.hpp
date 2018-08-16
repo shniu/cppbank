@@ -14,4 +14,7 @@
 
 void op_file1();
 
+void base_usage_1();
+void base_usage_2();
+
 #endif //CPPBANK_IO_HPP

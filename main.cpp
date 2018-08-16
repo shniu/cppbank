@@ -18,16 +18,20 @@ TEST(metachain, case1) {
 
 int main(int argc, char **argv) {
 
-    // 解析命令行参数
-    printf("参数个数: %d\n", argc);
-    printf("参数: %s\n", *(argv + 1));
+    /// Parse command line
+    printf("Command line params num: %d\n", argc);
+    printf("Command line param: %s\n", *(argv + 1));
 
     char *action = *(argv + 1);
     if (strcmp(action, "io") == 0) {
         op_file1();
+        base_usage_1();
     } else if (strcmp(action, "thread-pool") == 0) {
          MetaThreadPool metaThreadPool(10);
          metaThreadPool.SwitchActiveThread();
+    } else if (strcmp(action, "unittest") == 0) {
+        testing::InitGoogleTest(&argc, argv);
+        RUN_ALL_TESTS();
     }
 
     /*std::cout << "模拟银行队列" << std::endl;
@@ -52,10 +56,6 @@ int main(int argc, char **argv) {
     // auto dice = std::bind(dis2, generator2);
     */
     // hello();
-
-    /// unit test
-//    testing::InitGoogleTest(&argc, argv);
-//    RUN_ALL_TESTS();
 
     /// bubble sort
     /*int n, i, a[100];
