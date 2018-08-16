@@ -3,11 +3,13 @@
 //
 
 #include <iostream>
+#include <string>
 #include <random>
 #include <boost/algorithm/string.hpp>
 #include "algo/bubble.cpp"
 #include "gtest/gtest.h"
-#include "threadpool/thread_pool.hpp"
+#include "src/thread_pool.hpp"
+#include "src/io.hpp"
 
 TEST(metachain, case1) {
     EXPECT_EQ(10, 10);
@@ -15,6 +17,19 @@ TEST(metachain, case1) {
 
 
 int main(int argc, char **argv) {
+
+    // 解析命令行参数
+    printf("参数个数: %d\n", argc);
+    printf("参数: %s\n", *(argv + 1));
+
+    char *action = *(argv + 1);
+    if (strcmp(action, "io") == 0) {
+        op_file1();
+    } else if (strcmp(action, "thread-pool") == 0) {
+         MetaThreadPool metaThreadPool(10);
+         metaThreadPool.SwitchActiveThread();
+    }
+
     /*std::cout << "模拟银行队列" << std::endl;
     Bank b = Bank(1);
     b.Simulation();
@@ -38,9 +53,6 @@ int main(int argc, char **argv) {
     */
     // hello();
 
-    MetaThreadPool metaThreadPool(10);
-    metaThreadPool.SwitchActiveThread();
-
     /// unit test
 //    testing::InitGoogleTest(&argc, argv);
 //    RUN_ALL_TESTS();
@@ -55,5 +67,7 @@ int main(int argc, char **argv) {
     for (i = 0; i < n; i++) {
         std::cout << a[i] << std::endl;
     }*/
+
+    return 0;
 }
 
