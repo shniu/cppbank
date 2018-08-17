@@ -2,6 +2,8 @@
 // Created by niushaohan on 2018/8/16.
 //
 
+#include <iostream>
+#include <stdio.h>
 #include "io.hpp"
 
 void op_file1() {
