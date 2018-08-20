@@ -10,28 +10,26 @@
 
 using namespace std;
 
-typedef struct sockadd SA;
-
 int tinyhttp::open_clientfd(char *hostname, int port) {
     int clientfd;
     struct hostent *hp;
-    struct sockaddr_in serveraddr;
+    struct sockaddr_in serveraddr{};
 
     if ((clientfd = socket(AF_INET, SOCK_STREAM, 0) < 0)) {
         return -1;
     }
 
-    if ((hp = gethostbyname(hostname)) == NULL) {
+    if ((hp = gethostbyname(hostname)) == nullptr) {
         return -2;
     }
 
     bzero((char *) &serveraddr, sizeof(serveraddr));
     serveraddr.sin_family = AF_INET;
-    bcopy((char *) hp->h_addr_list[0],
-          (char *) &serveraddr.sin_addr.s_addr, hp->h_length);
+    bcopy(hp->h_addr_list[0],
+          (char *) &serveraddr.sin_addr.s_addr, static_cast<size_t>(hp->h_length));
     serveraddr.sin_port = htons(port);
 
-    if (connect(clientfd, (SA *) &serveraddr, sizeof(serveraddr)) < 0) {
+    if (connect(clientfd, (sockaddr *) &serveraddr, sizeof(serveraddr)) < 0) {
         return -1;
     }
 
@@ -40,11 +38,12 @@ int tinyhttp::open_clientfd(char *hostname, int port) {
 
 int tinyhttp::open_listenfd(int port) {
 
+    return port;
 }
 
 void tinyhttp::main() {
     const int port = 1111;
-    int fd = open_clientfd("", port);
-
+    // int fd = open_clientfd("", port);
+    int listenfd = open_listenfd(port);
 
 }
