@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+#include <vector>
 #include <string>
 #include <random>
 #include <boost/algorithm/string.hpp>
@@ -11,7 +12,7 @@
 #include "src/thread_pool.hpp"
 #include "src/io.hpp"
 #include "src/ip_conv.hpp"
-#include "src/server.hpp"
+#include "src/tinyhttp.hpp"
 
 TEST(metachain, case1) {
     EXPECT_EQ(10, 10);
@@ -19,7 +20,6 @@ TEST(metachain, case1) {
 
 
 int main(int argc, char **argv) {
-    connect();
 
     /// Parse command line
     printf("Command line params num: %d\n", argc);
@@ -39,7 +39,15 @@ int main(int argc, char **argv) {
         const char *ip = "192.168.1.124";
         char * hex = ip_to_hex(ip);
         printf("ip to hex: %s\n", hex);
+    } else if (strcmp(action, "httpserver") == 0) {
+        tinyhttp::main();
     }
+
+    // Vector test
+    /*std::vector<int> iVec(10);
+    for (auto iter = iVec.begin(); iter != iVec.end(); ++iter) {
+        *iter = 0;
+    }*/
 
     /*std::cout << "模拟银行队列" << std::endl;
     Bank b = Bank(1);
