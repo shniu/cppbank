@@ -10,6 +10,7 @@
 #include "gtest/gtest.h"
 #include "src/thread_pool.hpp"
 #include "src/io.hpp"
+#include "src/ip_conv.hpp"
 
 TEST(metachain, case1) {
     EXPECT_EQ(10, 10);
@@ -32,6 +33,10 @@ int main(int argc, char **argv) {
     } else if (strcmp(action, "unittest") == 0) {
         testing::InitGoogleTest(&argc, argv);
         RUN_ALL_TESTS();
+    } else if (strcmp(action, "ipconv") == 0) {
+        const char *ip = "192.168.1.124";
+        char * hex = ip_to_hex(ip);
+        printf("ip to hex: %s\n", hex);
     }
 
     /*std::cout << "模拟银行队列" << std::endl;
