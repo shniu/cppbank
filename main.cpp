@@ -11,6 +11,7 @@
 #include "src/thread_pool.hpp"
 #include "src/io.hpp"
 #include "src/ip_conv.hpp"
+#include "src/server.hpp"
 
 TEST(metachain, case1) {
     EXPECT_EQ(10, 10);
@@ -18,6 +19,7 @@ TEST(metachain, case1) {
 
 
 int main(int argc, char **argv) {
+    connect();
 
     /// Parse command line
     printf("Command line params num: %d\n", argc);
