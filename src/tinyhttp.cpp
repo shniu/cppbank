@@ -2,6 +2,7 @@
 // Created by niushaohan on 2018/8/20.
 //
 
+#include <string.h>
 #include <iostream>
 #include <sys/types.h>
 #include <netdb.h>
