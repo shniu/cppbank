@@ -36,12 +36,16 @@ namespace echo_client {
             return -1;
         }
 
-        printf("Connect server succeed!");
+        printf("Connect server succeed!\n");
 
         int recvbytes;
         int sendbytes;
         int len;
         char buf[MAXDATASIZE];
+
+        // send first
+        const char* msg = "hello, the first message";
+        send(client_fd, msg, strlen(msg), 0);
 
         if ((recvbytes = static_cast<int>(recv(client_fd, buf, MAXDATASIZE, 0))) == -1) {
             printf("recv error");
@@ -65,6 +69,7 @@ namespace echo_client {
         in_addr_t domain = inet_addr(*(argv + 2));
         auto port = static_cast<in_port_t>(atoi(*(argv + 3)));
 
+        // Todo 改造成等待用户输入，客户端建立连接后保持连接，直到退出
         return open_clientfd(domain, port);
     }
 

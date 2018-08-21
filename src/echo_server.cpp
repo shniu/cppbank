@@ -67,8 +67,13 @@ namespace echo_server {
 
             // child process
             if (!fork()) {
-                const char *msg = "Hello, i'm echo server.";
-                if (send(client_fd, msg, strlen(msg), 0) == -1) {
+                // recv message from the client and then send back to client
+                char buf[1000];
+                auto recvbytes = static_cast<int>(recv(client_fd, buf, 1000, 0));
+                buf[recvbytes] = '\0';
+                printf("* \tmessage is: %s\n", buf);
+                char * msg = buf; // "Hello, i'm echo server.";
+                if (send(client_fd, msg, static_cast<size_t>(recvbytes), 0) == -1) {
                     printf("* send error");
                 }
                 close(client_fd);
