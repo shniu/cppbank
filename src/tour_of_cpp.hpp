@@ -20,7 +20,7 @@ private:
     int sz;
 	double * elem;
 
-}
+};
 
 
 enum class Color {

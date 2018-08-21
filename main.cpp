@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+#include <vector>
 #include <string>
 #include <random>
 #include <boost/algorithm/string.hpp>
@@ -10,13 +11,17 @@
 #include "gtest/gtest.h"
 #include "src/thread_pool.hpp"
 #include "src/io.hpp"
+#include "src/ip_conv.hpp"
+#include "src/tinyhttp.hpp"
+#include "src/echo_server.cpp"
+#include "src/echo_client.cpp"
 
 TEST(metachain, case1) {
     EXPECT_EQ(10, 10);
 }
 
 
-int main(int argc, char **argv) {
+int main(int argc, char** argv) {
 
     /// Parse command line
     printf("Command line params num: %d\n", argc);
@@ -32,7 +37,31 @@ int main(int argc, char **argv) {
     } else if (strcmp(action, "unittest") == 0) {
         testing::InitGoogleTest(&argc, argv);
         RUN_ALL_TESTS();
+    } else if (strcmp(action, "ipconv") == 0) {
+        const char *ip = "192.168.1.124";
+        char * hex = ip_to_hex(ip);
+        printf("ip to hex: %s\n", hex);
+    } else if (strcmp(action, "httpserver") == 0) {
+        tinyhttp::main();
+    } else if (strcmp(action, "echoserver") == 0 ) {
+        printf("************** E C H O S E R V E R **************\n");
+        int code = echo_server::main(argc, argv);
+        if (code < 0) {
+            exit(1);
+        }
+        printf("*************************************************\n");
+    } else if (strcmp(action, "echoclient") == 0 ) {
+        int code = echo_client::main(argc, argv);
+        if (code < 0) {
+            exit(1);
+        }
     }
+
+    // Vector test
+    /*std::vector<int> iVec(10);
+    for (auto iter = iVec.begin(); iter != iVec.end(); ++iter) {
+        *iter = 0;
+    }*/
 
     /*std::cout << "模拟银行队列" << std::endl;
     Bank b = Bank(1);

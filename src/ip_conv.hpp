@@ -3,7 +3,7 @@
 #define FLUENTCPP_IP_CONV
 
 // ip to hex string
-char* ip_to_hex(const char* &ip);
+char* ip_to_hex(const char* ip);
 
 #endif  /// end of define
 
