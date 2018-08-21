@@ -13,13 +13,15 @@
 #include "src/io.hpp"
 #include "src/ip_conv.hpp"
 #include "src/tinyhttp.hpp"
+#include "src/echo_server.cpp"
+#include "src/echo_client.cpp"
 
 TEST(metachain, case1) {
     EXPECT_EQ(10, 10);
 }
 
 
-int main(int argc, char **argv) {
+int main(int argc, char** argv) {
 
     /// Parse command line
     printf("Command line params num: %d\n", argc);
@@ -41,6 +43,18 @@ int main(int argc, char **argv) {
         printf("ip to hex: %s\n", hex);
     } else if (strcmp(action, "httpserver") == 0) {
         tinyhttp::main();
+    } else if (strcmp(action, "echoserver") == 0 ) {
+        printf("************** E C H O S E R V E R **************\n");
+        int code = echo_server::main(argc, argv);
+        if (code < 0) {
+            exit(1);
+        }
+        printf("*************************************************\n");
+    } else if (strcmp(action, "echoclient") == 0 ) {
+        int code = echo_client::main(argc, argv);
+        if (code < 0) {
+            exit(1);
+        }
     }
 
     // Vector test
