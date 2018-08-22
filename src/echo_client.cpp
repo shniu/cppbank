@@ -13,17 +13,14 @@
 #include <strings.h>
 #include <zconf.h>
 
+#include "i_sock.hpp"
+
 #define MAXDATASIZE 1000
 
 namespace echo_client {
 
     int open_clientfd(in_addr_t domain, in_addr_t port) {
-        int client_fd;
-
-        if ((client_fd = socket(AF_INET, SOCK_STREAM, 0)) == -1) {
-            printf("socket error");
-            return -1;
-        }
+        int client_fd = i_socket(AF_INET, SOCK_STREAM, 0);
 
         // connect
         struct sockaddr_in server_addr;
@@ -38,24 +35,40 @@ namespace echo_client {
 
         printf("Connect server succeed!\n");
 
-        int recvbytes;
-        int sendbytes;
-        int len;
-        char buf[MAXDATASIZE];
+        // Todo 客户端连接到服务端后，就监听输入处理
+        char send_line[1000];
+        while (fgets(send_line, 1000, stdin) != nullptr) {
+            printf("fgets: %s\n", send_line);
+            int recvbytes;
+            char buf[MAXDATASIZE];
 
-        // send first
-        const char* msg = "hello, the first message";
-        send(client_fd, msg, strlen(msg), 0);
+            // send first
+            // const char* msg = "hello, the first message";
+            send_line[strlen(send_line) - 1] = '\0';
+            char* msg  = send_line;
+            printf("msg: %s\n", msg);
+            if (send(client_fd, msg, strlen(msg), 0) == -1) {
+                printf("send error");
+                return -1;
+            }
 
-        if ((recvbytes = static_cast<int>(recv(client_fd, buf, MAXDATASIZE, 0))) == -1) {
-            printf("recv error");
-            return -1;
+            if ((recvbytes = static_cast<int>(recv(client_fd, buf, MAXDATASIZE, 0))) == -1) {
+                printf("recv error");
+                return -1;
+            }
+
+            buf[recvbytes] = '\0';
+            printf("Received: %s\n", buf);
+            bzero(send_line, 1000);
+            bzero(buf, static_cast<size_t>(recvbytes));
         }
 
-        buf[recvbytes] = '\0';
-        printf("Received: %s", buf);
-        close(client_fd);
+        //close(client_fd);
         return 0;
+    }
+
+    void fputs_handle() {
+
     }
 
     int main(int argc, char** argv) {

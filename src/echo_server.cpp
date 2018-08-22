@@ -59,7 +59,7 @@ namespace echo_server {
             // accept
             sin_size = sizeof(struct sockaddr_in);
             if ((client_fd = accept(listenfd, (sockaddr *) &remote_addr, (socklen_t *)&sin_size)) == -1) {
-                printf("* accept error");
+                perror("* accept error");
                 continue;
             }
 
@@ -68,7 +68,7 @@ namespace echo_server {
             // child process
             if (!fork()) {
                 // recv message from the client and then send back to client
-                char buf[1000];
+                char buf[1000] = {0};
                 auto recvbytes = static_cast<int>(recv(client_fd, buf, 1000, 0));
                 buf[recvbytes] = '\0';
                 printf("* \tmessage is: %s\n", buf);
@@ -80,8 +80,8 @@ namespace echo_server {
                 exit(0);
             }
 
-            close(client_fd);
-            while (waitpid(-1, NULL, WNOHANG) > 0);
+            // close(client_fd);
+            // while (waitpid(-1, NULL, WNOHANG) > 0);
         }
 
         return listenfd;
