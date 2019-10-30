@@ -12,7 +12,7 @@
 #include <arpa/inet.h>
 #include <strings.h>
 #include <zconf.h>
-
+#include <cstring>
 #include "i_sock.hpp"
 
 #define MAXDATASIZE 1000

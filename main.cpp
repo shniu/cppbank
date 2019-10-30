@@ -15,6 +15,7 @@
 #include "src/tinyhttp.hpp"
 #include "src/echo_server.cpp"
 #include "src/echo_client.cpp"
+#include "src/struct.hpp"
 
 TEST(metachain, case1) {
     EXPECT_EQ(10, 10);
@@ -55,7 +56,11 @@ int main(int argc, char** argv) {
         if (code < 0) {
             exit(1);
         }
-    }
+    } else {   // default
+
+	    struct_ns::test();
+
+	}
 
     // Vector test
     /*std::vector<int> iVec(10);
